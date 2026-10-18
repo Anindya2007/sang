@@ -31,6 +31,16 @@ model User {
 
   @@map("users")
 }
+model UserRole {
+  userId Int
+  role   String @db.VarChar(20)
+
+  user User @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  @@id([userId, role])
+  @@map("user_roles")
+}
+
 
 model Ride {
   rideId         Int      @id @default(autoincrement())
