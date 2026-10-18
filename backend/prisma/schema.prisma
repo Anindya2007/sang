@@ -41,6 +41,19 @@ model UserRole {
   @@map("user_roles")
 }
 
+model Community {
+  communityId  Int    @id @default(autoincrement())
+  name         String @db.VarChar(150)
+  communityType String @db.VarChar(20)
+  emailDomain  String @unique @db.VarChar(150)
+
+  users UserCommunity[]
+  rides Ride[]
+
+  @@map("communities")
+}
+
+
 
 model Ride {
   rideId         Int      @id @default(autoincrement())
