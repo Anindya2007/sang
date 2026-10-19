@@ -107,3 +107,27 @@ model Cancellation {
 
   @@map("cancellations")
 }
+model Vehicle {
+  vehicleId      Int    @id @default(autoincrement())
+  driverId       Int
+  vehicleModel   String @db.VarChar(100)
+  registrationNo String @unique @db.VarChar(30)
+  vehicleType    String @db.VarChar(30)
+  seatCapacity   Int
+
+  driver User   @relation(fields: [driverId], references: [userId], onDelete: Cascade)
+  rides  Ride[]
+
+  @@map("vehicles")
+}
+model UserCommunity {
+  userId      Int
+  communityId Int
+  joinedAt    DateTime @default(now())
+
+  user      User      @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  community Community @relation(fields: [communityId], references: [communityId], onDelete: Cascade)
+
+  @@id([userId, communityId])
+  @@map("user_communities")
+}
