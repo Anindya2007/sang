@@ -120,3 +120,14 @@ model Vehicle {
 
   @@map("vehicles")
 }
+model UserCommunity {
+  userId      Int
+  communityId Int
+  joinedAt    DateTime @default(now())
+
+  user      User      @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  community Community @relation(fields: [communityId], references: [communityId], onDelete: Cascade)
+
+  @@id([userId, communityId])
+  @@map("user_communities")
+}
