@@ -93,3 +93,17 @@ model Booking {
 
   @@map("bookings")
 }
+
+model Cancellation {
+  cancellationId  Int       @id @default(autoincrement())
+  bookingId       Int       @unique
+  cancelledBy     Int
+  reason          String?
+  cancelledAt     DateTime  @default(now())
+  cancellationFee Decimal?  @db.Decimal(10, 2)
+
+  booking         Booking   @relation(fields: [bookingId], references: [bookingId], onDelete: Cascade)
+  user            User      @relation(fields: [cancelledBy], references: [userId])
+
+  @@map("cancellations")
+}
