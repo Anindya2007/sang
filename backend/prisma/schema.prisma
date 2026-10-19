@@ -78,3 +78,18 @@ model Ride {
 
   @@map("rides")
 }
+
+model Booking {
+  bookingId     Int           @id @default(autoincrement())
+  rideId        Int
+  riderId       Int
+  seatsBooked   Int
+  bookingStatus String        @db.VarChar(20)
+  bookedAt      DateTime      @default(now())
+
+  ride          Ride          @relation(fields: [rideId], references: [rideId], onDelete: Cascade)
+  rider         User          @relation(fields: [riderId], references: [userId], onDelete: Cascade)
+  cancellation  Cancellation?
+
+  @@map("bookings")
+}
