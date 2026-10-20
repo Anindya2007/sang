@@ -55,7 +55,21 @@ model Community {
   @@map("communities")
 }
 
+model Rating {
+  ratingId   Int      @id @default(autoincrement())
+  rideId     Int
+  fromUserId Int
+  toUserId   Int
+  rating     Int
+  review     String?
+  createdAt  DateTime @default(now())
 
+  ride     Ride @relation(fields: [rideId], references: [rideId], onDelete: Cascade)
+  fromUser User @relation("RatingsGiven", fields: [fromUserId], references: [userId])
+  toUser   User @relation("RatingsReceived", fields: [toUserId], references: [userId])
+
+  @@map("ratings")
+}
 
 model Ride {
   rideId         Int      @id @default(autoincrement())
@@ -109,6 +123,7 @@ model Cancellation {
 
   @@map("cancellations")
 }
+
 model Vehicle {
   vehicleId      Int    @id @default(autoincrement())
   driverId       Int
@@ -122,6 +137,7 @@ model Vehicle {
 
   @@map("vehicles")
 }
+
 model UserCommunity {
   userId      Int
   communityId Int
